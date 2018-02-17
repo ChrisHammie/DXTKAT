@@ -10,6 +10,7 @@
 
 class Sprite;
 class Sprite2D;
+class Tile;
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -75,7 +76,7 @@ private:
 
 	std::unique_ptr<DirectX::CommonStates>			m_states;
 	
-	std::vector<Sprite2D*>							tiles;
+	std::vector<Tile*>							tiles;
 
 	RECT											m_fullscreenRect;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;

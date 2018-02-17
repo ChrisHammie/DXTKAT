@@ -2,11 +2,13 @@
 #include "pch.h"
 
 class Sprite;
+class Tile;
 
 class Sprite2D
 {
 public:
 	Sprite2D(const wchar_t* _file_name, ID3D11Device* device);
+	Sprite2D();
 	~Sprite2D();
 
 public:
@@ -25,7 +27,7 @@ public:
 	void Tick();
 	void Draw();
 
-private:
+protected:
 
 	Sprite* m_sprite;
 

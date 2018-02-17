@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Sprite2D.h"
+#include "Tile.h"
 
 
 extern void ExitGame();
@@ -34,15 +35,29 @@ void Game::Initialize(HWND window, int width, int height)
 
     CreateResources();
 
-	int tile_amount = 500;
+	int tile_amountX = 0;
+	int tile_amountY = 0;
+	int tile_amount = 0;
+	tile_amountX = m_outputWidth / 100;
+	tile_amountY = m_outputHeight / 100;
+
+	tile_amount = tile_amountX * tile_amountY;
+
 	int x = 0;
+	int y = 0;
 	tiles.reserve(tile_amount);
 
 	for (int i = 0; i < tile_amount; i++)
 	{
-		tiles.push_back(new Sprite2D(L"cat.dds", m_d3dDevice.Get()));
-		tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, 0));
-		x += 64;
+		tiles.push_back(new Tile(L"cat.dds", m_d3dDevice.Get()));
+		tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
+		x += 100;
+		if (x == 800)
+		{
+			y += 100;
+			x = 0;
+		}
+		
 	}
 
 
