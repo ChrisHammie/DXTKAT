@@ -1,0 +1,4 @@
+﻿  Game.cpp
+d:\dxtk\dxtk\game.cpp(44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\dxtk\dxtk\game.cpp(120): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  DXTK.vcxproj -> D:\DXTK\Debug\DXTK.exe
