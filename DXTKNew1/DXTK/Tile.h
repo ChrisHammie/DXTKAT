@@ -7,9 +7,11 @@ public:
 	Tile(const wchar_t* _file_name, ID3D11Device* device);
 	~Tile();
 
-private:
+	Vector2 DrunkWalk(Vector2 pos);
 
-	void DrunkWalk();
+protected:
 
+	
+	int check = 0;
 	int direction = 0;
 };

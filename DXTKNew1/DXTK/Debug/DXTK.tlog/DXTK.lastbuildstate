@@ -1,2 +1,2 @@
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native64Bit
-Debug|Win32|D:\DXTKAT\DXTKNew1\|
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native64Bit:WindowsTargetPlatformVersion=8.1
+Debug|Win32|E:\DXTKGit\DXTK\DXTKNew1\|

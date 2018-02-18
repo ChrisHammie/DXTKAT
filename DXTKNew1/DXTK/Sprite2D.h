@@ -13,8 +13,8 @@ public:
 
 public:
 
-	const DirectX::SimpleMath::Vector2 GetPos() {return m_pos;}
-	void SetPos(DirectX::SimpleMath::Vector2 pos) { m_pos = pos; }
+	const DirectX::SimpleMath::Vector2 GetPos();
+	void SetPos(DirectX::SimpleMath::Vector2 pos);
 
 	const float GetRot() { return m_rot; }
 	void SetRot(float rot) { m_rot = rot; }

@@ -47,6 +47,8 @@
 #include "CommonStates.h"
 #include "DDSTextureLoader.h"
 
+using namespace DirectX::SimpleMath;
+
 namespace DX
 {
     inline void ThrowIfFailed(HRESULT hr)

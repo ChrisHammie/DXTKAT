@@ -8,6 +8,8 @@
 #include "Sprite2D.h"
 #include "Tile.h"
 
+#include <time.h>
+
 
 extern void ExitGame();
 
@@ -46,17 +48,15 @@ void Game::Initialize(HWND window, int width, int height)
 	int x = 0;
 	int y = 0;
 	tiles.reserve(tile_amount);
+	srand(time(NULL));
 
 	for (int i = 0; i < tile_amount; i++)
 	{
 		tiles.push_back(new Tile(L"cat.dds", m_d3dDevice.Get()));
-		tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
-		x += 100;
-		if (x == 800)
-		{
-			y += 100;
-			x = 0;
-		}
+		//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
+		tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+		x = tiles[i]->GetPos().x;
+		y = tiles[i]->GetPos().y;
 		
 	}
 
@@ -132,7 +132,7 @@ void Game::Render()
 	for (auto& tile : tiles)
 	{
 		m_spriteBatch->Draw(tile->GetSprite()->getResourceView(), tile->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
-		tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
+		//tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
 	}
 	
 

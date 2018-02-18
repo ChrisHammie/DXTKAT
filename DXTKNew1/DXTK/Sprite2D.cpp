@@ -18,6 +18,16 @@ Sprite2D::~Sprite2D()
 {
 }
 
+const DirectX::SimpleMath::Vector2 Sprite2D::GetPos()
+{
+	return m_pos;
+}
+
+void Sprite2D::SetPos(DirectX::SimpleMath::Vector2 pos)
+{
+	m_pos = pos;
+}
+
 Sprite* Sprite2D::GetSprite()
 {
 	return m_sprite;
