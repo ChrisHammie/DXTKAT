@@ -32,9 +32,6 @@
     <Image Include="cat.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="stone01.dds">
-      <Filter>Assets</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="settings.manifest">

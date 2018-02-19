@@ -33,4 +33,14 @@ Sprite* Sprite2D::GetSprite()
 	return m_sprite;
 }
 
+int Sprite2D::GetHeight()
+{
+	return m_sprite->getHeight();
+}
+
+int Sprite2D::GetWidth()
+{
+	return m_sprite->getWidth();
+}
+
 

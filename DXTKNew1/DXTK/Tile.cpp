@@ -20,7 +20,7 @@ Vector2 Tile::DrunkWalk(Vector2 pos)
 	
 	
 
-	direction = rand() % 4;
+	direction = rand() % 4 + 1;
 
 	check = direction;
 
@@ -30,12 +30,12 @@ Vector2 Tile::DrunkWalk(Vector2 pos)
 		{
 			if (check != 3)
 			{
-				SetPos(pos + Vector2(100, 0));
+				SetPos(pos + Vector2(m_sprite->getWidth(), 0));
 				return GetPos();
 			}
 			else
 			{
-				break;
+				return GetPos();
 			}
 			
 		}
@@ -43,12 +43,12 @@ Vector2 Tile::DrunkWalk(Vector2 pos)
 		{
 			if (check != 4)
 			{
-				SetPos(pos + Vector2(0, 100));
+				SetPos(pos + Vector2(0, m_sprite->getWidth()));
 				return GetPos();
 			}
 			else
 			{
-				break;
+				return GetPos();
 			}
 			
 		}
@@ -56,7 +56,11 @@ Vector2 Tile::DrunkWalk(Vector2 pos)
 		{
 			if (check != 1)
 			{
-				SetPos(pos + Vector2(-100, 0));
+				SetPos(pos + Vector2(m_sprite->getWidth() * -1, 0));
+				return GetPos();
+			}
+			else
+			{
 				return GetPos();
 			}
 			
@@ -65,12 +69,12 @@ Vector2 Tile::DrunkWalk(Vector2 pos)
 		{ 
 			if (check != 2)
 			{
-				SetPos(pos + Vector2(0, -100));
+				SetPos(pos + Vector2(0, m_sprite->getWidth() * -1));
 				return GetPos();
 			}
 			else
 			{
-				break;
+				return GetPos();
 			}
 			
 		}

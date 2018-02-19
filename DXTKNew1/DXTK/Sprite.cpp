@@ -13,6 +13,11 @@ Sprite::Sprite(const wchar_t* _file_name, ID3D11Device* _d3d_device)
 	ID3D11Resource *pResource;
 	m_sprite_rv->GetResource(&pResource);
 	static_cast<ID3D11Texture2D*>(pResource)->GetDesc(&m_desc);
+	
+}
+
+Sprite::Sprite()
+{
 }
 
 

@@ -1,11 +1,8 @@
-﻿  Sprite2D.cpp
-  Game.cpp
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(51): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(58): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(59): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-  Generating Code...
-  Tile.cpp
-e:\dxtkgit\dxtk\dxtknew1\dxtk\tile.cpp(79): warning C4715: 'Tile::DrunkWalk': not all control paths return a value
+﻿  Tile.cpp
+e:\dxtkgit\dxtk\dxtknew1\dxtk\tile.cpp(33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\dxtkgit\dxtk\dxtknew1\dxtk\tile.cpp(46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\dxtkgit\dxtk\dxtknew1\dxtk\tile.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\dxtkgit\dxtk\dxtknew1\dxtk\tile.cpp(72): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\dxtkgit\dxtk\dxtknew1\dxtk\tile.cpp(83): warning C4715: 'Tile::DrunkWalk': not all control paths return a value
   DXTK.vcxproj -> E:\DXTKGit\DXTK\DXTKNew1\Debug\DXTK.exe
   DXTK.vcxproj -> E:\DXTKGit\DXTK\DXTKNew1\Debug\DXTK.pdb (Full PDB)

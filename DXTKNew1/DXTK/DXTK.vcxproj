@@ -184,7 +184,6 @@
   <ItemGroup>
     <Image Include="cat.png" />
     <Image Include="directx.ico" />
-    <Image Include="stone01.dds" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="settings.manifest" />

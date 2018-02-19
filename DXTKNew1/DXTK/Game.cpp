@@ -37,22 +37,25 @@ void Game::Initialize(HWND window, int width, int height)
 
     CreateResources();
 
+
+	int tileWidth = 40, tileHeight = 40;
 	int tile_amountX = 0;
 	int tile_amountY = 0;
 	int tile_amount = 0;
-	tile_amountX = m_outputWidth / 100;
-	tile_amountY = m_outputHeight / 100;
+	tile_amountX = m_outputWidth / tileWidth;
+	tile_amountY = m_outputHeight / tileHeight;
 
 	tile_amount = tile_amountX * tile_amountY;
 
-	int x = 0;
-	int y = 0;
+	int x = 400;
+	int y = 300;
 	tiles.reserve(tile_amount);
 	srand(time(NULL));
 
+
 	for (int i = 0; i < tile_amount; i++)
 	{
-		tiles.push_back(new Tile(L"cat.dds", m_d3dDevice.Get()));
+		tiles.push_back(new Tile(L"stone.dds", m_d3dDevice.Get()));
 		//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
 		tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
 		x = tiles[i]->GetPos().x;

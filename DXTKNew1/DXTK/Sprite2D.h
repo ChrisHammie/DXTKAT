@@ -24,6 +24,9 @@ public:
 
 	Sprite* GetSprite();
 
+	int GetHeight();
+	int GetWidth();
+
 	void Tick();
 	void Draw();
 

@@ -5,6 +5,7 @@ class Sprite
 {
 public:
 	Sprite(const wchar_t* _filename, ID3D11Device* _device);
+	Sprite();
 	~Sprite();
 
 	ID3D11ShaderResourceView* getResourceView() const;
