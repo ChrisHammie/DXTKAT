@@ -45,17 +45,22 @@ void Game::Initialize(HWND window, int width, int height)
 	tile_amountX = m_outputWidth / tileWidth;
 	tile_amountY = m_outputHeight / tileHeight;
 
-	tile_amount = tile_amountX * tile_amountY;
+	//tile_amount = tile_amountX * tile_amountY;
+	tile_amount = 100;
 
 	int x = 400;
 	int y = 300;
 	int waterX = 0;
 	int waterY = 0;
+
+	int boundCheck = 0;
 	tiles.reserve(tile_amount);
 	water.reserve(500);
 	srand(time(NULL));
 
-	for (int i = 0; i < tile_amount; i++)
+
+
+	for (int i = 0; i < 300; i++)
 	{
 		water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
 		//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
@@ -73,11 +78,43 @@ void Game::Initialize(HWND window, int width, int height)
 
 	for (int i = 0; i < tile_amount; i++)
 	{
-		tiles.push_back(new Tile(L"stone.dds", m_d3dDevice.Get()));
-		//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
-		tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
-		x = tiles[i]->GetPos().x;
-		y = tiles[i]->GetPos().y;
+		if (i == 0)
+		{
+			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
+		}
+		else if (i == tile_amount - 1)
+		{
+			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
+		}
+		else
+		{
+			tiles.push_back(new Tile(L"stone.dds", m_d3dDevice.Get()));
+		}
+		
+
+		if (x < 0 || x >= m_outputWidth)
+		{
+			boundCheck = rand() % i;
+			x = tiles[boundCheck]->GetPos().x;
+			y = tiles[boundCheck]->GetPos().y;
+			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+		}
+		else if (y < 0 || y >= m_outputHeight)
+		{
+			boundCheck = rand() % i;
+			x = tiles[boundCheck]->GetPos().x;
+			y = tiles[boundCheck]->GetPos().y;
+			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+		}
+		else
+		{
+			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+			x = tiles[i]->GetPos().x;
+			y = tiles[i]->GetPos().y;
+		}
+		//tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+		//x = tiles[i]->GetPos().x;
+		//y = tiles[i]->GetPos().y;
 		
 	}
 
