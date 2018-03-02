@@ -49,9 +49,27 @@ void Game::Initialize(HWND window, int width, int height)
 
 	int x = 400;
 	int y = 300;
+	int waterX = 0;
+	int waterY = 0;
 	tiles.reserve(tile_amount);
+	water.reserve(500);
 	srand(time(NULL));
 
+	for (int i = 0; i < tile_amount; i++)
+	{
+		water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
+		//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
+		water[i]->SetPos(Vector2(waterX, waterY));
+		waterX = water[i]->GetPos().x + 40;
+		waterY = water[i]->GetPos().y;
+		if (waterX == 800)
+		{
+			waterX = 0;
+			waterY += 40;
+		}
+
+
+	}
 
 	for (int i = 0; i < tile_amount; i++)
 	{
@@ -62,6 +80,8 @@ void Game::Initialize(HWND window, int width, int height)
 		y = tiles[i]->GetPos().y;
 		
 	}
+
+	
 
 
 
@@ -132,6 +152,11 @@ void Game::Render()
 	m_spriteBatch->Begin(SpriteSortMode_Deferred, nullptr, m_states->LinearWrap());
 
 	//m_spriteBatch->Draw(m_background.Get(), m_fullscreenRect);
+	for (auto& wet : water)
+	{
+		m_spriteBatch->Draw(wet->GetSprite()->getResourceView(), wet->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
+		//tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
+	}
 	for (auto& tile : tiles)
 	{
 		m_spriteBatch->Draw(tile->GetSprite()->getResourceView(), tile->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
