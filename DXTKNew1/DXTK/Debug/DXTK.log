@@ -1,16 +1,18 @@
 ﻿  Game.cpp
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(59): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(68): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(69): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(98): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(99): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(105): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(106): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(111): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(112): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-e:\dxtkgit\dxtk\dxtknew1\dxtk\game.cpp(113): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
-  DXTK.vcxproj -> E:\DXTKGit\DXTK\DXTKNew1\Debug\DXTK.exe
-  DXTK.vcxproj -> E:\DXTKGit\DXTK\DXTKNew1\Debug\DXTK.pdb (Full PDB)
+d:\dxtkat\dxtknew1\dxtk\game.cpp(61): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(70): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(71): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(101): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(102): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(110): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(111): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(112): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(117): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(118): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(119): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(124): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+d:\dxtkat\dxtknew1\dxtk\game.cpp(125): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+  DXTK.vcxproj -> D:\DXTKAT\DXTKNew1\Debug\DXTK.exe

@@ -46,14 +46,16 @@ void Game::Initialize(HWND window, int width, int height)
 	tile_amountY = m_outputHeight / tileHeight;
 
 	//tile_amount = tile_amountX * tile_amountY;
-	tile_amount = 100;
+	tile_amount = 150;
 
 	int x = 400;
-	int y = 300;
+	int y = 280;
 	int waterX = 0;
 	int waterY = 0;
 
 	int boundCheck = 0;
+	bool start = false;
+	
 	tiles.reserve(tile_amount);
 	water.reserve(500);
 	srand(time(NULL));
@@ -72,49 +74,58 @@ void Game::Initialize(HWND window, int width, int height)
 			waterX = 0;
 			waterY += 40;
 		}
+		
 
 
 	}
 
 	for (int i = 0; i < tile_amount; i++)
 	{
-		if (i == 0)
+		if (i == tile_amount - 2)
 		{
 			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
 		}
 		else if (i == tile_amount - 1)
 		{
 			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
+			start = true;
 		}
 		else
 		{
 			tiles.push_back(new Tile(L"stone.dds", m_d3dDevice.Get()));
 		}
 		
-
-		if (x < 0 || x >= m_outputWidth)
+		
+		if (start == true)
 		{
-			boundCheck = rand() % i;
-			x = tiles[boundCheck]->GetPos().x;
-			y = tiles[boundCheck]->GetPos().y;
+			x = tiles[0]->GetPos().x;
+			y = tiles[0]->GetPos().y;
 			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
 		}
-		else if (y < 0 || y >= m_outputHeight)
+		else 
 		{
-			boundCheck = rand() % i;
-			x = tiles[boundCheck]->GetPos().x;
-			y = tiles[boundCheck]->GetPos().y;
-			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+			if (x < 0 || x >= m_outputWidth - tileHeight)
+			{
+				boundCheck = rand() % i;
+				x = tiles[boundCheck]->GetPos().x;
+				y = tiles[boundCheck]->GetPos().y;
+				tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+			}
+			else if (y < 0 || y >= m_outputHeight - tileHeight)
+			{
+				boundCheck = rand() % i;
+				x = tiles[boundCheck]->GetPos().x;
+				y = tiles[boundCheck]->GetPos().y;
+				tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+			}
+			else
+			{
+				tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+				x = tiles[i]->GetPos().x;
+				y = tiles[i]->GetPos().y;
+			}
 		}
-		else
-		{
-			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
-			x = tiles[i]->GetPos().x;
-			y = tiles[i]->GetPos().y;
-		}
-		//tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
-		//x = tiles[i]->GetPos().x;
-		//y = tiles[i]->GetPos().y;
+	
 		
 	}
 
