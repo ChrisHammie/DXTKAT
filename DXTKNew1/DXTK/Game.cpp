@@ -52,9 +52,12 @@ void Game::Initialize(HWND window, int width, int height)
 	int y = 280;
 	int waterX = 0;
 	int waterY = 0;
+	int distance = 0;
+	int farTile = 0;
 
 	int boundCheck = 0;
 	bool start = false;
+	bool end = false;
 	
 	tiles.reserve(tile_amount);
 	water.reserve(500);
@@ -84,10 +87,11 @@ void Game::Initialize(HWND window, int width, int height)
 		if (i == tile_amount - 2)
 		{
 			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
+			end = true;
 		}
 		else if (i == tile_amount - 1)
 		{
-			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
+			tiles.push_back(new Tile(L"red.dds", m_d3dDevice.Get()));
 			start = true;
 		}
 		else
@@ -102,16 +106,34 @@ void Game::Initialize(HWND window, int width, int height)
 			y = tiles[0]->GetPos().y;
 			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
 		}
+		else if (end == true)
+		{
+			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+			for (int j = 0; j < tiles.size(); j++)
+			{
+				if (std::abs(tiles[0]->GetPos().x - tiles[j]->GetPos().x) > distance)
+				{
+					distance = std::abs(tiles[0]->GetPos().x - tiles[j]->GetPos().x);
+					farTile = j;
+				}
+				if (j == tiles.size() - 1)
+				{
+					x = tiles[farTile]->GetPos().x;
+					y = tiles[farTile]->GetPos().y;
+					tiles[i]->SetPos(Vector2(x, y));
+				}
+			}
+		}
 		else 
 		{
-			if (x < 0 || x >= m_outputWidth - tileHeight)
+			if (x < tileHeight || x >= m_outputWidth - tileHeight)
 			{
 				boundCheck = rand() % i;
 				x = tiles[boundCheck]->GetPos().x;
 				y = tiles[boundCheck]->GetPos().y;
 				tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
 			}
-			else if (y < 0 || y >= m_outputHeight - tileHeight)
+			else if (y < tileHeight || y >= m_outputHeight - tileHeight)
 			{
 				boundCheck = rand() % i;
 				x = tiles[boundCheck]->GetPos().x;
