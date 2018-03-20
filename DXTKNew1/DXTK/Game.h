@@ -5,7 +5,10 @@
 #pragma once
 
 #include "StepTimer.h"
+#include <dinput.h>
 #include <vector>
+#include "Keyboard.h"
+#include "Mouse.h"
 
 
 class Sprite;
@@ -78,7 +81,12 @@ private:
 	
 	std::vector<Tile*>								tiles;
 	std::vector<Tile*>								water;
+	Tile* player;
 
 	RECT											m_fullscreenRect;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
+
+	//std::unique_ptr<IDirectInputDevice8>			m_keyboard;
+	std::unique_ptr<DirectX::Keyboard>				m_keyboard;
+	std::unique_ptr<DirectX::Mouse>					m_mouse;
 };

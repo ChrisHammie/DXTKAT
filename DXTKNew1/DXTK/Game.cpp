@@ -63,8 +63,7 @@ void Game::Initialize(HWND window, int width, int height)
 	water.reserve(500);
 	srand(time(NULL));
 
-
-
+	
 	for (int i = 0; i < 300; i++)
 	{
 		water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
@@ -152,9 +151,12 @@ void Game::Initialize(HWND window, int width, int height)
 	}
 
 	
+	player = new Tile(L"red.dds", m_d3dDevice.Get());
+	player->SetPos(tiles[0]->GetPos());
 
-
-
+	m_keyboard = std::make_unique<Keyboard>();
+	m_mouse = std::make_unique<Mouse>();
+	m_mouse->SetWindow(window);
 
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
@@ -182,6 +184,31 @@ void Game::Update(DX::StepTimer const& timer)
 
     // TODO: Add your game logic here.
     elapsedTime;
+	auto kb = m_keyboard->GetState();
+	if (kb.Escape)
+	{
+		PostQuitMessage(0);
+	}
+
+	auto mouse = m_mouse->GetState();
+
+	if (kb.Up || kb.W)
+	{
+		player->SetPos(player->GetPos() - Vector2(0.0f, 0.5f));
+	}
+	if (kb.Down || kb.S)
+	{
+		player->SetPos(player->GetPos() + Vector2(0.0f, 0.5f));
+	}
+	if (kb.Left || kb.A)
+	{
+		player->SetPos(player->GetPos() - Vector2(0.5f, 0.0f));
+	}
+	if (kb.Right || kb.D)
+	{
+		player->SetPos(player->GetPos() + Vector2(0.5f, 0.0f));
+	}
+
 }
 
 // Draws the scene.
@@ -233,6 +260,7 @@ void Game::Render()
 		//tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
 	}
 	
+	m_spriteBatch->Draw(player->GetSprite()->getResourceView(), player->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
 
 	m_spriteBatch->End();
 
