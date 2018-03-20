@@ -42,6 +42,10 @@ public:
 private:
 
 	Sprite2D* m_sprite;
+	bool up;
+	bool down;
+	bool right;
+	bool left;
 
     void Update(DX::StepTimer const& timer);
     void Render();

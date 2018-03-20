@@ -58,28 +58,14 @@ void Game::Initialize(HWND window, int width, int height)
 	int boundCheck = 0;
 	bool start = false;
 	bool end = false;
+	bool waterPos = false;
 	
 	tiles.reserve(tile_amount);
 	water.reserve(500);
 	srand(time(NULL));
 
 	
-	for (int i = 0; i < 300; i++)
-	{
-		water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
-		//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
-		water[i]->SetPos(Vector2(waterX, waterY));
-		waterX = water[i]->GetPos().x + 40;
-		waterY = water[i]->GetPos().y;
-		if (waterX == 800)
-		{
-			waterX = 0;
-			waterY += 40;
-		}
-		
-
-
-	}
+	
 
 	for (int i = 0; i < tile_amount; i++)
 	{
@@ -150,6 +136,50 @@ void Game::Initialize(HWND window, int width, int height)
 		
 	}
 
+	for (int i = 0; i < 300; i)
+	{
+		for (auto& tile : tiles)
+		{
+			if (tile->GetPos() == Vector2(waterX, waterY))
+			{
+				waterPos = true;
+				break;
+			}
+			else
+			{
+				waterPos = false;
+				break;
+			}
+		}
+		if (waterPos == false)
+		{
+			water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
+			//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
+			water[i]->SetPos(Vector2(waterX, waterY));
+			waterX = water[i]->GetPos().x + 40;
+			waterY = water[i]->GetPos().y;
+			if (waterX == 800)
+			{
+				waterX = 0;
+				waterY += 40;
+			}
+			i++;
+		}
+		else
+		{
+			/*water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
+			water[i]->SetPos(Vector2(water[i-1]->GetPos().x, water[i - 1]->GetPos().y));*/
+			waterX += 40;
+			if (waterX == 800)
+			{
+				waterX = 0;
+				waterY += 40;
+			}
+		}
+		
+
+	}
+
 	
 	player = new Tile(L"red.dds", m_d3dDevice.Get());
 	player->SetPos(tiles[0]->GetPos());
@@ -192,21 +222,80 @@ void Game::Update(DX::StepTimer const& timer)
 
 	auto mouse = m_mouse->GetState();
 
-	if (kb.Up || kb.W)
+	if (up == true)
 	{
-		player->SetPos(player->GetPos() - Vector2(0.0f, 0.5f));
+		if (kb.Up || kb.W)
+		{
+			player->SetPos(player->GetPos() - Vector2(0.0f, 0.5f));
+		}
 	}
-	if (kb.Down || kb.S)
+	if (down == true)
 	{
-		player->SetPos(player->GetPos() + Vector2(0.0f, 0.5f));
+		if (kb.Down || kb.S)
+		{
+			player->SetPos(player->GetPos() + Vector2(0.0f, 0.5f));
+		}
 	}
-	if (kb.Left || kb.A)
+	if (left == true)
 	{
-		player->SetPos(player->GetPos() - Vector2(0.5f, 0.0f));
+		if (kb.Left || kb.A)
+		{
+			player->SetPos(player->GetPos() - Vector2(0.5f, 0.0f));
+		}
 	}
-	if (kb.Right || kb.D)
+	if (right == true)
 	{
-		player->SetPos(player->GetPos() + Vector2(0.5f, 0.0f));
+		if (kb.Right || kb.D)
+		{
+			player->SetPos(player->GetPos() + Vector2(0.5f, 0.0f));
+		}
+	}
+	
+	for (int i = 0; i < water.size(); i++)
+
+
+	for (auto& water : water)
+	{
+		if (player->GetPos() == Vector2(water->GetPos().x + 40, water->GetPos().y))	//right
+		{
+			right = false;
+			break;
+		}
+		else
+		{
+			right = true;
+			
+		}
+		if (player->GetPos() == Vector2(water->GetPos().x - 40, water->GetPos().y))	//left
+		{
+			left = false;
+			break;
+		}
+		else
+		{
+			left = true;
+			
+		}
+		if (player->GetPos() == Vector2(water->GetPos().x, water->GetPos().y + 40))	//down
+		{
+			down = false;
+			break;
+		}
+		else
+		{
+			down = true;
+			
+		}
+		if (player->GetPos() == Vector2(water->GetPos().x, water->GetPos().y - 40))	//up
+		{
+			up = false;
+			break;
+		}
+		else
+		{
+			up = true;
+			
+		}
 	}
 
 }
