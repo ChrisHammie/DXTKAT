@@ -9,7 +9,8 @@
 #include <vector>
 #include "Keyboard.h"
 #include "Mouse.h"
-
+#include <iostream>
+#include <fstream>
 
 class Sprite;
 class Sprite2D;
@@ -42,6 +43,10 @@ public:
 private:
 
 	Sprite2D* m_sprite;
+	bool drawTiles = true;
+	int tile_amount = 0;
+	int waterX = 0;
+	int waterY = 0;
 	bool up;
 	bool down;
 	bool right;
@@ -57,6 +62,10 @@ private:
     void CreateResources();
 
     void OnDeviceLost();
+
+	void ReadOutVectors();
+
+	void ReadInFile();
 
     // Device resources.
     HWND                                            m_window;

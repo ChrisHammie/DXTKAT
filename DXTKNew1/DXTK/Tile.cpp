@@ -26,55 +26,59 @@ Vector2 Tile::DrunkWalk(Vector2 pos)
 
 	switch (direction)
 	{
-		case 1:
+		case 1:			//right
 		{
 			if (check != 3)
 			{
 				SetPos(pos + Vector2(m_sprite->getWidth(), 0));
+				
 				return GetPos();
 			}
 			else
 			{
-				return GetPos();
+				DrunkWalk(pos);
 			}
 			
 		}
-		case 2:
+		case 2:			//down
 		{
 			if (check != 4)
 			{
 				SetPos(pos + Vector2(0, m_sprite->getWidth()));
+				
 				return GetPos();
 			}
 			else
 			{
-				return GetPos();
+				DrunkWalk(pos);
 			}
 			
 		}
-		case 3:
+		case 3:			//left
 		{
 			if (check != 1)
 			{
-				SetPos(pos + Vector2(m_sprite->getWidth() * -1, 0));
+				SetPos(pos + (Vector2(m_sprite->getWidth() * -1, 0)));
+				
 				return GetPos();
 			}
 			else
 			{
-				return GetPos();
+				DrunkWalk(pos);
 			}
 			
 		}
-		case 4:
+		case 4:			//up
 		{ 
 			if (check != 2)
 			{
-				SetPos(pos + Vector2(0, m_sprite->getWidth() * -1));
+				SetPos(pos + Vector2(0, (m_sprite->getWidth() * -1)));
+				
 				return GetPos();
 			}
 			else
 			{
-				return GetPos();
+				DrunkWalk(pos);
 			}
 			
 		}

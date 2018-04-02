@@ -41,7 +41,7 @@ void Game::Initialize(HWND window, int width, int height)
 	int tileWidth = 40, tileHeight = 40;
 	int tile_amountX = 0;
 	int tile_amountY = 0;
-	int tile_amount = 0;
+	
 	tile_amountX = m_outputWidth / tileWidth;
 	tile_amountY = m_outputHeight / tileHeight;
 
@@ -50,10 +50,11 @@ void Game::Initialize(HWND window, int width, int height)
 
 	int x = 400;
 	int y = 280;
-	int waterX = 0;
-	int waterY = 0;
-	int distance = 0;
-	int farTile = 0;
+	
+	int distanceX = 0;
+	int distanceY = 0;
+	int farTileX = 0;
+	int farTileY = 0;
 
 	int boundCheck = 0;
 	bool start = false;
@@ -89,25 +90,43 @@ void Game::Initialize(HWND window, int width, int height)
 		{
 			x = tiles[0]->GetPos().x;
 			y = tiles[0]->GetPos().y;
-			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+			tiles[i]->SetPos(Vector2(x, y));
+			start = false;
 		}
 		else if (end == true)
 		{
 			tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
 			for (int j = 0; j < tiles.size(); j++)
 			{
-				if (std::abs(tiles[0]->GetPos().x - tiles[j]->GetPos().x) > distance)
+				if (std::abs(tiles[0]->GetPos().x - tiles[j]->GetPos().x) > distanceX)
 				{
-					distance = std::abs(tiles[0]->GetPos().x - tiles[j]->GetPos().x);
-					farTile = j;
+					distanceX = std::abs(tiles[0]->GetPos().x - tiles[j]->GetPos().x);
+					farTileX = j;
 				}
+				else if (std::abs(tiles[0]->GetPos().y - tiles[j]->GetPos().y) > distanceY)
+				{
+					distanceY = std::abs(tiles[0]->GetPos().y - tiles[j]->GetPos().y);
+					farTileY = j;
+				}
+
 				if (j == tiles.size() - 1)
 				{
-					x = tiles[farTile]->GetPos().x;
-					y = tiles[farTile]->GetPos().y;
-					tiles[i]->SetPos(Vector2(x, y));
+					if (distanceX > distanceY)
+					{
+						x = tiles[farTileX]->GetPos().x;
+						y = tiles[farTileX]->GetPos().y;
+						tiles[i]->SetPos(Vector2(x, y));
+					}
+					else
+					{
+						x = tiles[farTileY]->GetPos().x;
+						y = tiles[farTileY]->GetPos().y;
+						tiles[i]->SetPos(Vector2(x, y));
+					}
+					
 				}
 			}
+			end = false;
 		}
 		else 
 		{
@@ -127,62 +146,54 @@ void Game::Initialize(HWND window, int width, int height)
 			}
 			else
 			{
-				tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+				if (i == 0)
+				{
+					tiles[i]->SetPos(Vector2(x, y));
+				}
+				else
+				{
+					tiles[i]->SetPos(tiles[i]->DrunkWalk(Vector2(x, y)));
+				}
 				x = tiles[i]->GetPos().x;
 				y = tiles[i]->GetPos().y;
+				
 			}
 		}
 	
 		
 	}
 
-	for (int i = 0; i < 300; i)
+	for (int i = 0; i < 300; i++)
 	{
-		for (auto& tile : tiles)
+		water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
+		water[i]->SetPos(Vector2(waterX, waterY));
+		waterX += 40;
+		if (waterX == 800)
 		{
-			if (tile->GetPos() == Vector2(waterX, waterY))
-			{
-				waterPos = true;
-				break;
-			}
-			else
-			{
-				waterPos = false;
-				break;
-			}
+			waterX = 0;
+			waterY += 40;
 		}
-		if (waterPos == false)
-		{
-			water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
-			//tiles[i]->SetPos(DirectX::SimpleMath::Vector2(x, y));
-			water[i]->SetPos(Vector2(waterX, waterY));
-			waterX = water[i]->GetPos().x + 40;
-			waterY = water[i]->GetPos().y;
-			if (waterX == 800)
-			{
-				waterX = 0;
-				waterY += 40;
-			}
-			i++;
-		}
-		else
-		{
-			/*water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
-			water[i]->SetPos(Vector2(water[i-1]->GetPos().x, water[i - 1]->GetPos().y));*/
-			waterX += 40;
-			if (waterX == 800)
-			{
-				waterX = 0;
-				waterY += 40;
-			}
-		}
-		
-
 	}
 
+
 	
-	player = new Tile(L"red.dds", m_d3dDevice.Get());
-	player->SetPos(tiles[0]->GetPos());
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		for (auto& it = water.begin(); it != water.end(); it++)
+		{
+			if ((*it)->GetPos() == tiles[i]->GetPos())
+			{
+				it = water.erase(it);
+			}
+		}
+	}
+	
+
+	
+
+
+	player = new Tile(L"player.dds", m_d3dDevice.Get());
+	player->SetPos(Vector2(tiles[0]->GetPos().x, tiles[0]->GetPos().y));
 
 	m_keyboard = std::make_unique<Keyboard>();
 	m_mouse = std::make_unique<Mouse>();
@@ -194,6 +205,68 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
+}
+
+void Game::ReadInFile()
+{
+	
+	water.clear();
+	tiles.clear();
+	waterX = 0;
+	waterY = 0;
+	std::ifstream levelFile("level.txt");
+
+	Vector2 playerPos;
+	Vector2 tilePos;
+
+	levelFile >> playerPos.x >> playerPos.y;
+	player = new Tile(L"player.dds", m_d3dDevice.Get());
+	player->SetPos(playerPos);
+
+
+	for (int i = 0; i < tile_amount; i++)
+	{
+		levelFile >> tilePos.x >> tilePos.y;
+
+		if (i == tile_amount - 2)
+		{
+			tiles.push_back(new Tile(L"green.dds", m_d3dDevice.Get()));
+		}
+		else if (i == tile_amount - 1)
+		{
+			tiles.push_back(new Tile(L"red.dds", m_d3dDevice.Get()));
+		}
+		else
+		{
+			tiles.push_back(new Tile(L"stone.dds", m_d3dDevice.Get()));
+		}
+		tiles[i]->SetPos(tilePos);
+	}
+
+	for (int i = 0; i < 300; i++)
+	{
+		water.push_back(new Tile(L"water.dds", m_d3dDevice.Get()));
+		water[i]->SetPos(Vector2(waterX, waterY));
+		waterX += 40;
+		if (waterX == 800)
+		{
+			waterX = 0;
+			waterY += 40;
+		}
+	}
+
+
+
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		for (auto& it = water.begin(); it != water.end(); it++)
+		{
+			if ((*it)->GetPos() == tiles[i]->GetPos())
+			{
+				it = water.erase(it);
+			}
+		}
+	}
 }
 
 // Executes the basic game loop.
@@ -220,6 +293,15 @@ void Game::Update(DX::StepTimer const& timer)
 		PostQuitMessage(0);
 	}
 
+	if (kb.P)
+	{
+		ReadOutVectors();
+	}
+	if (kb.Q)
+	{
+		ReadInFile();
+	}
+
 	auto mouse = m_mouse->GetState();
 
 	if (up == true)
@@ -229,29 +311,37 @@ void Game::Update(DX::StepTimer const& timer)
 			player->SetPos(player->GetPos() - Vector2(0.0f, 0.5f));
 		}
 	}
-	if (down == true)
+	
+	
+	
+	if (kb.Down || kb.S)
 	{
-		if (kb.Down || kb.S)
-		{
-			player->SetPos(player->GetPos() + Vector2(0.0f, 0.5f));
-		}
-	}
-	if (left == true)
-	{
-		if (kb.Left || kb.A)
-		{
-			player->SetPos(player->GetPos() - Vector2(0.5f, 0.0f));
-		}
-	}
-	if (right == true)
-	{
-		if (kb.Right || kb.D)
-		{
-			player->SetPos(player->GetPos() + Vector2(0.5f, 0.0f));
-		}
+		player->SetPos(player->GetPos() + Vector2(0.0f, 0.5f));
 	}
 	
-	for (int i = 0; i < water.size(); i++)
+	
+	if (kb.Left || kb.A)
+	{
+		player->SetPos(player->GetPos() - Vector2(0.5f, 0.0f));
+	}
+	
+	
+	if (kb.Right || kb.D)
+	{
+		player->SetPos(player->GetPos() + Vector2(0.5f, 0.0f));
+	}
+	
+	if (kb.T && drawTiles == false)
+	{
+		drawTiles = true;
+	}
+	else if (drawTiles == true && kb.T)
+	{
+		drawTiles = false;
+	}
+
+	
+	//for (int i = 0; i < water.size(); i++)
 
 
 	for (auto& water : water)
@@ -343,11 +433,16 @@ void Game::Render()
 		m_spriteBatch->Draw(wet->GetSprite()->getResourceView(), wet->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
 		//tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
 	}
-	for (auto& tile : tiles)
+	if (drawTiles == true)
 	{
-		m_spriteBatch->Draw(tile->GetSprite()->getResourceView(), tile->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
-		//tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
+		for (auto& tile : tiles)
+		{
+			m_spriteBatch->Draw(tile->GetSprite()->getResourceView(), tile->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
+			//tiles[1]->SetPos(DirectX::SimpleMath::Vector2(tiles[1]->GetPos().x + 0.001, tiles[1]->GetPos().y));
+		}
 	}
+	
+	
 	
 	m_spriteBatch->Draw(player->GetSprite()->getResourceView(), player->GetPos(), nullptr, Colors::White, 0.0f, DirectX::SimpleMath::Vector2::Zero, 1.0f, SpriteEffects_None);
 
@@ -644,3 +739,21 @@ void Game::OnDeviceLost()
 
     CreateResources();
 }
+
+void Game::ReadOutVectors()
+{
+	//for (auto it - )
+	std::ofstream levelFile("level.txt");
+
+	levelFile << player->GetPos().x << " " << player->GetPos().y << "\n";
+
+	for (auto& i = tiles.begin(); i != tiles.end(); i++)
+	{
+		
+		levelFile << (*i)->GetPos().x << " " << (*i)->GetPos().y << "\n";
+	}
+
+
+}
+
+
